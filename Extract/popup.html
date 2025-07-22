@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client Hunter</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            width: 350px;
+            padding: 15px;
+            background-color: #f4f5f7;
+        }
+        h1 {
+            font-size: 18px;
+            color: #172b4d;
+            text-align: center;
+            margin-top: 0;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #5e6c84;
+            margin-bottom: 4px;
+        }
+        input {
+            width: 95%;
+            padding: 8px;
+            border: 1px solid #dfe1e6;
+            border-radius: 3px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #0052cc;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 5px;
+        }
+        button#scrape-btn {
+            background-color: #6554c0;
+        }
+        button#deep-search-btn {
+            background-color: #ff991f;
+            color: #172b4d;
+        }
+        button#logout-btn {
+            background-color: #de350b;
+            margin-top: 15px;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        #status {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 10px;
+            font-weight: 500;
+            min-height: 16px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Client Hunter</h1>
+
+    <!-- Login View -->
+    <div id="login-view">
+        <h2>Login</h2>
+        <div class="form-group">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" placeholder="apna@email.com">
+        </div>
+        <div class="form-group">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" placeholder="Password">
+        </div>
+        <button id="login-btn">Login</button>
+    </div>
+
+    <!-- Scraper View (Initially hidden) -->
+    <div id="scraper-view" class="hidden">
+        <button id="scrape-btn">✨ AI Extract Info</button>
+        <button id="deep-search-btn">🕵️‍♂️ Deep Search for Email</button>
+
+        <div class="form-group">
+            <label for="name">Client Name</label>
+            <input type="text" id="name" placeholder="e.g., John Doe">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="e.g., john@example.com">
+        </div>
+        <div class="form-group">
+            <label for="company">Company</label>
+            <input type="text" id="company" placeholder="e.g., John Designs">
+        </div>
+        <div class="form-group">
+            <label for="industry">Industry</label>
+            <input type="text" id="industry" placeholder="e.g., Design Agency">
+        </div>
+
+        <button id="send-btn">Send to Dashboard</button>
+        <button id="logout-btn">Logout</button>
+    </div>
+    
+    <p id="status"></p>
+
+   <script src="popup.js" type="module"></script>
+</body>
+</html>

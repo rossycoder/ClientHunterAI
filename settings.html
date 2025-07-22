@@ -1,0 +1,180 @@
+---
+<!-- settings.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Hunter - Settings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7fafc; }
+        .gradient-text { background: linear-gradient(to right, #6366F1, #8B5CF6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .sidebar-link { transition: all 0.2s ease-in-out; }
+        .sidebar-link.active { background-color: #eef2ff; color: #4f46e5; font-weight: 600; }
+        .sidebar-link:hover { background-color: #f3f4f6; }
+        .mobile-sidebar { transition: transform 0.3s ease-in-out; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        <div id="sidebar" class="mobile-sidebar fixed inset-y-0 left-0 w-64 bg-white border-r transform -translate-x-full md:relative md:translate-x-0 z-30">
+            <div class="flex items-center justify-center h-16 border-b">
+                <h1 class="text-2xl font-bold gradient-text">Client Hunter</h1>
+            </div>
+            <div class="flex flex-col flex-grow p-4">
+                <nav class="flex-grow space-y-2">
+                    <a href="dashboard.html" class="sidebar-link flex items-center p-3 rounded-lg"><svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>Dashboard</a>
+                    <a href="leads.html" class="sidebar-link flex items-center p-3 rounded-lg "><svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M15 21a6 6 0 00-9-5.197M15 21a6 6 0 00-9-5.197"></path></svg>Leads</a>
+                    <a href="campaigns.html" class="sidebar-link flex items-center p-3 rounded-lg"><svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 001.414 0l2.414-2.414a1 1 0 01.707-.293H20"></path></svg>Campaigns</a>
+                    <a href="analytics.html" class="sidebar-link flex items-center p-3 rounded-lg"><svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>Analytics</a>
+                </nav>
+                <div class="mt-auto">
+                     <a href="settings.html" class="sidebar-link flex items-center p-3 rounded-lg active">  <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Settings</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="flex flex-col flex-grow">
+            <header class="flex justify-between items-center p-4 md:p-6 border-b bg-white">
+                <button id="menu-btn" class="md:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                 </button>
+                 <h2 class="text-xl md:text-2xl font-semibold text-gray-700">Settings</h2>
+                 <div id="user-info" class="flex items-center gap-4">
+                     <span id="user-email" class="text-sm text-gray-600 hidden sm:block"></span>
+                     <button id="logout-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg">Logout</button>
+                 </div>
+            </header>
+            <main class="flex-grow p-4 md:p-6 overflow-y-auto">
+                <div class="max-w-3xl mx-auto space-y-8">
+                    <!-- API Keys Section -->
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">API Keys & Credentials</h3>
+                        <p class="text-sm text-gray-500 mb-6">Your keys are stored securely and are only used to send emails on your behalf.</p>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="gemini-key" class="block text-sm font-medium text-gray-700">Gemini AI API Key</label>
+                                <input type="password" id="gemini-key" class="mt-1 block w-full px-3 py-2 border rounded-md" placeholder="Enter your Gemini API Key">
+                            </div>
+                             <div>
+                                <label for="sender-email" class="block text-sm font-medium text-gray-700">Your Gmail Address</label>
+                                <input type="email" id="sender-email" class="mt-1 block w-full px-3 py-2 border rounded-md" placeholder="you@gmail.com">
+                            </div>
+                            <div>
+                                <label for="sender-password" class="block text-sm font-medium text-gray-700">Your Gmail App Password</label>
+                                <input type="password" id="sender-password" class="mt-1 block w-full px-3 py-2 border rounded-md" placeholder="Enter your 16-digit app password">
+                            </div>
+                            <div class="pt-2">
+                                <button id="save-settings-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-5 rounded-lg">Save Settings</button>
+                                <p id="settings-status" class="text-sm mt-2 font-medium"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Subscription Section -->
+                     <div class="bg-white p-8 rounded-xl shadow">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Your Plan</h3>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-lg font-semibold text-green-500">Free Plan</p>
+                                <p class="text-sm text-gray-500">50 email credits per month.</p>
+                            </div>
+                            <a href="pricing.html" class="bg-gray-800 text-white font-bold py-2 px-5 rounded-lg hover:bg-gray-700">Upgrade Plan</a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+     <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const API_URL = 'http://127.0.0.1:5002';
+            const firebaseConfig = {
+                apiKey: "AIzaSyCerSZpilFHxS3cB4BUqTricn2xLeAm3gc",
+                authDomain: "client-hunter-app.firebaseapp.com",
+                projectId: "client-hunter-app",
+                storageBucket: "client-hunter-app.appspot.com",
+                messagingSenderId: "594541822555",
+                appId: "1:594541822555:web:a7426b558a043948e3b57e"
+            };
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            
+            const geminiKeyInput = document.getElementById('gemini-key');
+            const senderEmailInput = document.getElementById('sender-email');
+            const senderPasswordInput = document.getElementById('sender-password');
+            const saveBtn = document.getElementById('save-settings-btn');
+            const statusEl = document.getElementById('settings-status');
+            const userEmailSpan = document.getElementById('user-email');
+            const logoutBtn = document.getElementById('logout-btn');
+            const sidebar = document.getElementById('sidebar');
+            const menuBtn = document.getElementById('menu-btn');
+
+            let idToken = null;
+
+            onAuthStateChanged(auth, async user => {
+                if (user) {
+                    userEmailSpan.textContent = user.email;
+                    idToken = await user.getIdToken(true);
+                    loadSettings();
+                } else { 
+                    window.location.href = 'login.html'; 
+                }
+            });
+            
+            logoutBtn.addEventListener('click', () => signOut(auth));
+            menuBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+            });
+
+            async function loadSettings() {
+                if (!idToken) return;
+                statusEl.textContent = 'Loading settings...';
+                try {
+                    const response = await fetch(`${API_URL}/api/settings`, {
+                        headers: { 'Authorization': `Bearer ${idToken}` }
+                    });
+                    const settings = await response.json();
+                    if (settings.gemini_key) geminiKeyInput.value = settings.gemini_key;
+                    if (settings.sender_email) senderEmailInput.value = settings.sender_email;
+                    if (settings.sender_password) senderPasswordInput.value = settings.sender_password;
+                    statusEl.textContent = 'Settings loaded.';
+                } catch (e) { 
+                    statusEl.textContent = 'Could not load settings.';
+                }
+            }
+
+            saveBtn.addEventListener('click', async () => {
+                if (!idToken) return;
+                statusEl.textContent = 'Saving...';
+                const settings = {
+                    gemini_key: geminiKeyInput.value,
+                    sender_email: senderEmailInput.value,
+                    sender_password: senderPasswordInput.value
+                };
+                try {
+                    const response = await fetch(`${API_URL}/api/settings`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${idToken}`
+                        },
+                        body: JSON.stringify(settings)
+                    });
+                    if (!response.ok) throw new Error("Failed to save.");
+                    statusEl.textContent = '✅ Settings saved successfully!';
+                } catch (e) {
+                    statusEl.textContent = '❌ Error saving settings.';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

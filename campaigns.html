@@ -1,0 +1,427 @@
+<!-- campaigns.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Hunter - Campaigns</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text { background: linear-gradient(to right, #6366F1, #8B5CF6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .sidebar-link { transition: all 0.2s ease-in-out; }
+        .sidebar-link.active { background-color: #eef2ff; color: #4f46e5; font-weight: 600; }
+        .sidebar-link:hover { background-color: #f3f4f6; }
+        .modal-backdrop {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex; justify-content: center; align-items: center; z-index: 50;
+        }
+        .toast-notification {
+            position: fixed; bottom: 20px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 100; transition: opacity 0.3s, transform 0.3s;
+        }
+        button:disabled { cursor: not-allowed; opacity: 0.6; }
+        .mobile-sidebar { transition: transform 0.3s ease-in-out; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        <div id="sidebar" class="mobile-sidebar fixed inset-y-0 left-0 w-64 bg-white border-r transform -translate-x-full md:relative md:translate-x-0 z-30">
+            <div class="flex items-center justify-center h-16 border-b">
+                <h1 class="text-2xl font-bold gradient-text">Client Hunter</h1>
+            </div>
+            <div class="flex flex-col flex-grow p-4">
+                <nav class="flex-grow space-y-2">
+                    <a href="dashboard.html" class="sidebar-link flex items-center p-3 rounded-lg"><svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>Dashboard</a>
+                    <a href="leads.html" class="sidebar-link flex items-center p-3 rounded-lg "><svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M15 21a6 6 0 00-9-5.197M15 21a6 6 0 00-9-5.197"></path></svg>Leads</a>
+                    <a href="campaigns.html" class="sidebar-link flex items-center p-3 rounded-lg  active"><svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 001.414 0l2.414-2.414a1 1 0 01.707-.293H20"></path></svg>Campaigns</a>
+                    <a href="analytics.html" class="sidebar-link flex items-center p-3 rounded-lg"><svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>Analytics</a>
+                </nav>
+                <div class="mt-auto">
+                    <a href="settings.html" class="sidebar-link flex items-center p-3 rounded-lg">  <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Settings</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="flex flex-col flex-grow">
+            <header class="flex justify-between items-center p-4 md:p-6 border-b bg-white">
+                <button id="menu-btn" class="md:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                 </button>
+                <h2 class="text-xl md:text-2xl font-semibold text-gray-700">Create a Campaign Sequence</h2>
+                <div id="user-info" class="flex items-center gap-4">
+                    <p class="text-sm text-gray-500">Connecting...</p>
+                </div>
+            </header>
+            <main class="flex-grow p-4 md:p-6 overflow-y-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left Column: Saved Sequences -->
+                    <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Saved Sequences</h3>
+                        <div id="sequences-list" class="space-y-2">
+                            <p class="text-sm text-gray-500">Loading sequences...</p>
+                        </div>
+                    </div>
+                    <!-- Right Column: Sequence Editor -->
+                    <div class="lg:col-span-2 bg-white p-8 rounded-xl shadow space-y-6">
+                        <input type="hidden" id="sequence-id">
+                        <div>
+                            <label for="sequence-name" class="block text-sm font-medium text-gray-700">Sequence Name</label>
+                            <input type="text" id="sequence-name" class="mt-1 block w-full p-2 border rounded-md" placeholder="e.g., Q3 Software Outreach">
+                        </div>
+                        
+                        <div class="border p-4 rounded-lg bg-gray-50">
+                            <label class="block text-lg font-semibold text-gray-800">Step 1: Initial Email</label>
+                            <textarea id="step1-prompt" class="mt-2 w-full bg-white p-2 rounded-md border" rows="5" placeholder="Write a friendly email to [client name]... Use placeholders like [company / website] to personalize."></textarea>
+                        </div>
+
+                        <div class="border p-4 rounded-lg bg-gray-50">
+                            <div class="flex items-center gap-4 mb-2">
+                                <label class="block text-lg font-semibold text-gray-800">Step 2: Follow-up</label>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-sm">Wait</span>
+                                    <input type="number" id="step2-wait" value="3" class="w-16 p-1 text-center border rounded-md">
+                                    <span class="text-sm">days, then send:</span>
+                                </div>
+                            </div>
+                            <textarea id="step2-prompt" class="w-full bg-white p-2 rounded-md border" rows="4" placeholder="A friendly follow-up to [client name]... (Follow-up logic is not yet implemented)"></textarea>
+                        </div>
+                        
+                        <div class="flex flex-col md:flex-row justify-between items-center pt-4 gap-4">
+                            <div>
+                                <button id="save-sequence-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-5 rounded-lg" disabled>Save New Sequence</button>
+                                <button id="update-sequence-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg hidden" disabled>Update Sequence</button>
+                                <button id="cancel-edit-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg ml-2 hidden">Cancel</button>
+                            </div>
+                            <button id="start-campaign-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg text-lg w-full md:w-auto" disabled>Start Campaign</button>
+                        </div>
+                        <div id="campaign-log" class="mt-4 h-48 bg-gray-800 text-white p-4 rounded-md text-sm font-mono overflow-y-auto hidden"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="modal-backdrop hidden">
+        <div class="bg-white p-8 rounded-lg shadow-xl max-w-sm w-full mx-4">
+            <p id="modal-message" class="text-lg mb-6">Are you sure?</p>
+            <div class="flex justify-end gap-4">
+                <button id="modal-cancel-btn" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg">Cancel</button>
+                <button id="modal-confirm-btn" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-notification" class="toast-notification opacity-0 transform translate-y-2">
+        <div id="toast-message" class="bg-gray-900 text-white px-6 py-3 rounded-full shadow-lg"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // ... (Your existing JavaScript code remains exactly the same)
+            // The only new part is the mobile menu toggle logic below
+            
+            const sidebar = document.getElementById('sidebar');
+            const menuBtn = document.getElementById('menu-btn');
+
+            menuBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+            });
+            
+            // Your existing code from line 220 onwards goes here...
+            const firebaseConfig = {
+                apiKey: "AIzaSyCerSZpilFHxS3cB4BUqTricn2xLeAm3gc",
+                authDomain: "client-hunter-app.firebaseapp.com",
+                projectId: "client-hunter-app",
+                storageBucket: "client-hunter-app.appspot.com",
+                messagingSenderId: "594541822555",
+                appId: "1:594541822555:web:a7426b558a043948e3b57e"
+            };
+            const API_URL = 'http://127.0.0.1:5002';
+            const sequenceIdInput = document.getElementById('sequence-id');
+            const sequenceNameInput = document.getElementById('sequence-name');
+            const step1Prompt = document.getElementById('step1-prompt');
+            const step2Wait = document.getElementById('step2-wait');
+            const step2Prompt = document.getElementById('step2-prompt');
+            const saveSequenceBtn = document.getElementById('save-sequence-btn');
+            const updateSequenceBtn = document.getElementById('update-sequence-btn');
+            const cancelEditBtn = document.getElementById('cancel-edit-btn');
+            const startCampaignBtn = document.getElementById('start-campaign-btn');
+            const sequencesList = document.getElementById('sequences-list');
+            const campaignLog = document.getElementById('campaign-log');
+            const userInfo = document.getElementById('user-info');
+            const modal = document.getElementById('confirmation-modal');
+            const modalMessage = document.getElementById('modal-message');
+            const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+            const modalCancelBtn = document.getElementById('modal-cancel-btn');
+            const toast = document.getElementById('toast-notification');
+            const toastMessage = document.getElementById('toast-message');
+            let auth, userId, idToken;
+            let onConfirmCallback = null;
+            let isCampaignRunning = false;
+            try {
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                handleAuthentication();
+            } catch (e) {
+                console.error("Firebase initialization failed:", e);
+                userInfo.innerHTML = `<p class="text-red-500">Firebase config error.</p>`;
+            }
+            function handleAuthentication() {
+                onAuthStateChanged(auth, async user => {
+                    if (user) {
+                        userId = user.uid;
+                        idToken = await user.getIdToken(true);
+                        userInfo.innerHTML = `<p class="text-sm text-gray-500">UID: ${userId.substring(0, 10)}...</p>`;
+                        saveSequenceBtn.disabled = false;
+                        updateSequenceBtn.disabled = false;
+                        startCampaignBtn.disabled = false;
+                        loadSequences();
+                    } else {
+                        window.location.href = 'login.html';
+                    }
+                });
+            }
+            function showToast(message) {
+                toastMessage.textContent = message;
+                toast.classList.remove('opacity-0', 'translate-y-2');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0', 'translate-y-2');
+                }, 3000);
+            }
+            function showModal(message, onConfirm) {
+                modalMessage.textContent = message;
+                onConfirmCallback = onConfirm;
+                modal.classList.remove('hidden');
+            }
+            function hideModal() {
+                modal.classList.add('hidden');
+                onConfirmCallback = null;
+            }
+            modalConfirmBtn.addEventListener('click', () => {
+                if (onConfirmCallback) onConfirmCallback();
+                hideModal();
+            });
+            modalCancelBtn.addEventListener('click', hideModal);
+            function resetEditorState() {
+                sequenceIdInput.value = '';
+                sequenceNameInput.value = '';
+                step1Prompt.value = '';
+                step2Prompt.value = '';
+                step2Wait.value = 3;
+                saveSequenceBtn.classList.remove('hidden');
+                updateSequenceBtn.classList.add('hidden');
+                cancelEditBtn.classList.add('hidden');
+            }
+            async function loadSequences() {
+                if (!idToken) return;
+                try {
+                    const response = await fetch(`${API_URL}/api/sequences`, {
+                        headers: { 'Authorization': `Bearer ${idToken}` }
+                    });
+                    if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
+                    const sequences = await response.json();
+                    sequencesList.innerHTML = '';
+                    if (sequences.length === 0) {
+                        sequencesList.innerHTML = '<p class="text-sm text-gray-500">No saved sequences yet.</p>';
+                    }
+                    sequences.forEach(seq => {
+                        const div = document.createElement('div');
+                        div.className = 'p-3 border rounded-md hover:bg-gray-50 transition-colors flex justify-between items-center';
+                        const nameSpan = document.createElement('span');
+                        nameSpan.textContent = seq.name;
+                        nameSpan.className = 'cursor-pointer flex-grow';
+                        nameSpan.onclick = () => loadSequenceIntoEditor(seq);
+                        const buttonsDiv = document.createElement('div');
+                        buttonsDiv.className = 'flex items-center gap-2';
+                        const editBtn = document.createElement('button');
+                        editBtn.className = 'text-gray-400 hover:text-blue-600 p-1';
+                        editBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" /><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" /></svg>`;
+                        editBtn.onclick = () => loadSequenceIntoEditor(seq, true);
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.className = 'text-gray-400 hover:text-red-600 p-1';
+                        deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>`;
+                        deleteBtn.onclick = () => deleteSequence(seq.id, seq.name);
+                        buttonsDiv.appendChild(editBtn);
+                        buttonsDiv.appendChild(deleteBtn);
+                        div.appendChild(nameSpan);
+                        div.appendChild(buttonsDiv);
+                        sequencesList.appendChild(div);
+                    });
+                } catch (e) {
+                    console.error("Could not load sequences", e);
+                    showToast("Error loading sequences.");
+                }
+            }
+            function loadSequenceIntoEditor(seq, isEditMode = false) {
+                sequenceNameInput.value = seq.name;
+                step1Prompt.value = seq.steps[0]?.prompt || '';
+                step2Wait.value = seq.steps[1]?.days || 3;
+                step2Prompt.value = seq.steps[2]?.prompt || '';
+                if (isEditMode) {
+                    sequenceIdInput.value = seq.id;
+                    saveSequenceBtn.classList.add('hidden');
+                    updateSequenceBtn.classList.remove('hidden');
+                    cancelEditBtn.classList.remove('hidden');
+                    showToast(`Editing: ${seq.name}`);
+                } else {
+                     showToast(`Loaded sequence: ${seq.name}`);
+                }
+            }
+            function deleteSequence(id, name) {
+                showModal(`Are you sure you want to delete the "${name}" sequence? This cannot be undone.`, async () => {
+                    try {
+                        const response = await fetch(`${API_URL}/api/sequences/${id}`, {
+                            method: 'DELETE',
+                            headers: { 'Authorization': `Bearer ${idToken}` }
+                        });
+                        if (!response.ok) throw new Error("Failed to delete.");
+                        showToast("Sequence deleted successfully.");
+                        loadSequences();
+                        resetEditorState();
+                    } catch (e) {
+                        showToast("Error deleting sequence.");
+                        console.error("Delete error:", e);
+                    }
+                });
+            }
+            saveSequenceBtn.addEventListener('click', async () => {
+                if (!sequenceNameInput.value.trim()) {
+                    showToast("Please enter a sequence name.");
+                    return;
+                }
+                const sequence = {
+                    name: sequenceNameInput.value,
+                    steps: [
+                        { type: 'email', prompt: step1Prompt.value },
+                        { type: 'wait', days: parseInt(step2Wait.value) },
+                        { type: 'email', prompt: step2Prompt.value }
+                    ]
+                };
+                try {
+                    const response = await fetch(`${API_URL}/api/sequences`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` },
+                        body: JSON.stringify(sequence)
+                    });
+                     if (!response.ok) throw new Error("Failed to save sequence.");
+                    loadSequences();
+                    showToast('New sequence saved!');
+                    resetEditorState();
+                } catch (e) {
+                    showToast('Error saving sequence.');
+                    console.error("Save sequence error:", e);
+                }
+            });
+            updateSequenceBtn.addEventListener('click', async () => {
+                const id = sequenceIdInput.value;
+                if (!id) return;
+                const sequence = {
+                    name: sequenceNameInput.value,
+                    steps: [
+                        { type: 'email', prompt: step1Prompt.value },
+                        { type: 'wait', days: parseInt(step2Wait.value) },
+                        { type: 'email', prompt: step2Prompt.value }
+                    ]
+                };
+                try {
+                    const response = await fetch(`${API_URL}/api/sequences/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` },
+                        body: JSON.stringify(sequence)
+                    });
+                    if (!response.ok) throw new Error("Failed to update sequence.");
+                    loadSequences();
+                    showToast('Sequence updated!');
+                    resetEditorState();
+                } catch(e) {
+                    showToast('Error updating sequence.');
+                    console.error("Update error:", e);
+                }
+            });
+            cancelEditBtn.addEventListener('click', resetEditorState);
+            startCampaignBtn.addEventListener('click', () => {
+                if (isCampaignRunning) {
+                    showToast("A campaign is already in progress.");
+                    return;
+                }
+                 if (!step1Prompt.value.trim()) {
+                    showToast("Please write a prompt for the first email.");
+                    return;
+                }
+                showModal(
+                    "This will start sending the FIRST email of this sequence to all your leads. Are you sure?",
+                    startCampaign
+                );
+            });
+            async function startCampaign() {
+                const sequence = {
+                    id: `temp_${Date.now()}`,
+                    name: sequenceNameInput.value || 'Untitled Campaign',
+                    steps: [ { type: 'email', prompt: step1Prompt.value } ]
+                };
+                campaignLog.classList.remove('hidden');
+                campaignLog.innerHTML = '';
+                addLog("🚀 Initializing campaign...");
+                isCampaignRunning = true;
+                startCampaignBtn.disabled = true;
+                try {
+                    const response = await fetch(`${API_URL}/api/start-campaign`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${idToken}`
+                        },
+                        body: JSON.stringify({ sequence: sequence })
+                    });
+                    if (!response.body) {
+                        throw new Error("ReadableStream not available.");
+                    }
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    while (true) {
+                        const { value, done } = await reader.read();
+                        if (done) break;
+                        const chunk = decoder.decode(value);
+                        const lines = chunk.split('\n\n');
+                        lines.forEach(line => {
+                            if (line.startsWith('data:')) {
+                                const data = line.substring(5).trim();
+                                if (data === "___END___") {
+                                    addLog("✅ Campaign Finished!");
+                                    isCampaignRunning = false;
+                                    startCampaignBtn.disabled = false;
+                                } else {
+                                    addLog(data);
+                                }
+                            }
+                        });
+                    }
+                } catch (error) {
+                    addLog(`❌ Error: ${error.message}`);
+                    console.error("Campaign start error:", error);
+                    isCampaignRunning = false;
+                    startCampaignBtn.disabled = false;
+                }
+            }
+            function addLog(message) {
+                const p = document.createElement('p');
+                p.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+                campaignLog.appendChild(p);
+                campaignLog.scrollTop = campaignLog.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>

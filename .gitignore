@@ -1,0 +1,19 @@
+# Environment Variables
+.env
+venv/
+env/
+
+# Firebase Service Account Key (Bahut Zaroori)
+serviceAccountKey.json
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# IDE/Editor folders
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db

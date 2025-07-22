@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Hunter - Leads</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7fafc; }
+        .gradient-text { background: linear-gradient(to right, #6366F1, #8B5CF6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .sidebar-link { transition: all 0.2s ease-in-out; }
+        .sidebar-link.active { background-color: #eef2ff; color: #4f46e5; font-weight: 600; }
+        .sidebar-link:hover { background-color: #f3f4f6; }
+        .file-input-wrapper { position: relative; overflow: hidden; display: inline-block; cursor: pointer; }
+        .file-input-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; }
+        .file-input-button { background-color: #4338ca; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 600; transition: background-color 0.2s; }
+        .file-input-wrapper:hover .file-input-button { background-color: #3730a3; }
+        .modal-backdrop {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex; justify-content: center; align-items: center; z-index: 50;
+        }
+        .toast-notification {
+            position: fixed; bottom: 20px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 100; transition: opacity 0.3s, transform 0.3s;
+        }
+        /* NEW: Mobile Sidebar Styles */
+        .mobile-sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        <div id="sidebar" class="mobile-sidebar fixed inset-y-0 left-0 w-64 bg-white border-r transform -translate-x-full md:relative md:translate-x-0 z-30">
+            <div class="flex items-center justify-center h-16 border-b">
+                <h1 class="text-2xl font-bold gradient-text">Client Hunter</h1>
+            </div>
+            <div class="flex flex-col flex-grow p-4">
+                <nav class="flex-grow space-y-2">
+                    <a href="dashboard.html" class="sidebar-link flex items-center p-3 rounded-lg"><svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>Dashboard</a>
+                    <a href="leads.html" class="sidebar-link flex items-center p-3 rounded-lg active"><svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M15 21a6 6 0 00-9-5.197M15 21a6 6 0 00-9-5.197"></path></svg>Leads</a>
+                    <a href="campaigns.html" class="sidebar-link flex items-center p-3 rounded-lg"><svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 001.414 0l2.414-2.414a1 1 0 01.707-.293H20"></path></svg>Campaigns</a>
+                    <a href="analytics.html" class="sidebar-link flex items-center p-3 rounded-lg"><svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>Analytics</a>
+                </nav>
+                <div class="mt-auto">
+                     <a href="settings.html" class="sidebar-link flex items-center p-3 rounded-lg"> <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Settings</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="flex flex-col flex-grow">
+            <header class="flex justify-between items-center p-4 md:p-6 border-b bg-white">
+                 <!-- Hamburger Menu Button -->
+                 <button id="menu-btn" class="md:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                 </button>
+                 <h2 class="text-xl md:text-2xl font-semibold text-gray-700">Manage Leads</h2>
+                 <div class="flex items-center gap-4">
+                     <span id="user-email" class="text-sm text-gray-600 hidden sm:block"></span>
+                     <button id="logout-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg">Logout</button>
+                 </div>
+            </header>
+            
+            <main class="flex-grow p-4 md:p-6 overflow-y-auto">
+                <div class="space-y-8">
+                    <!-- Load Leads Section -->
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Load Leads in Bulk</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="sheet-url" class="block text-sm font-medium text-gray-700 mb-1">Load from Google Sheet URL (must be public)</label>
+                                <input type="text" id="sheet-url" placeholder="https://docs.google.com/spreadsheets/d/..." class="w-full bg-gray-50 p-2 rounded-lg border">
+                            </div>
+                            <div class="text-center text-gray-500 font-semibold">OR</div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Load from CSV File</label>
+                                <div class="flex items-center gap-4">
+                                    <div class="file-input-wrapper">
+                                        <button class="file-input-button">Choose File</button>
+                                        <input type="file" id="csv-file-input" accept=".csv">
+                                    </div>
+                                    <span id="file-name" class="text-gray-600 truncate">No file chosen</span>
+                                </div>
+                            </div>
+                            <div class="pt-2">
+                                <button id="load-leads-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                                    Load Leads
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Leads Table -->
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                            <h2 class="text-xl font-bold text-gray-800">Your Current Leads</h2>
+                            <button id="clear-leads-btn" class="bg-red-100 text-red-700 font-semibold py-2 px-4 rounded-lg hover:bg-red-200 transition self-start md:self-center">Clear All</button>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                            <div class="md:col-span-2">
+                                <input type="text" id="search-leads" class="w-full bg-gray-50 p-2 rounded-lg border" placeholder="Search leads...">
+                            </div>
+                            <div>
+                                <select id="filter-industry" class="w-full bg-gray-50 p-2 rounded-lg border">
+                                    <option value="">All Industries</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50" id="leads-table-head"></thead>
+                                <tbody id="leads-table-body" class="bg-white divide-y divide-gray-200"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div id="confirmation-modal" class="modal-backdrop hidden">
+        <div class="bg-white p-8 rounded-lg shadow-xl max-w-sm w-full mx-4">
+            <p id="modal-message" class="text-lg mb-6">Are you sure?</p>
+            <div class="flex justify-end gap-4">
+                <button id="modal-cancel-btn" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg">Cancel</button>
+                <button id="modal-confirm-btn" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-notification" class="toast-notification opacity-0 transform translate-y-2">
+        <div id="toast-message" class="bg-gray-900 text-white px-6 py-3 rounded-full shadow-lg"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, query } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // ... (Your existing JavaScript code remains exactly the same)
+            // The only new part is the mobile menu toggle logic below
+            
+            const sidebar = document.getElementById('sidebar');
+            const menuBtn = document.getElementById('menu-btn');
+
+            menuBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+            });
+
+            // Your existing code from line 220 onwards goes here...
+            const API_URL = 'http://127.0.0.1:5002';
+            const firebaseConfig = {
+                apiKey: "AIzaSyCerSZpilFHxS3cB4BUqTricn2xLeAm3gc",
+                authDomain: "client-hunter-app.firebaseapp.com",
+                projectId: "client-hunter-app",
+                storageBucket: "client-hunter-app.appspot.com",
+                messagingSenderId: "594541822555",
+                appId: "1:594541822555:web:a7426b558a043948e3b57e"
+            };
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const db = getFirestore(app);
+            const userEmailSpan = document.getElementById('user-email');
+            const logoutBtn = document.getElementById('logout-btn');
+            const leadsTableHead = document.getElementById('leads-table-head');
+            const leadsTableBody = document.getElementById('leads-table-body');
+            const searchInput = document.getElementById('search-leads');
+            const industryFilter = document.getElementById('filter-industry');
+            const loadLeadsBtn = document.getElementById('load-leads-btn');
+            const sheetUrlInput = document.getElementById('sheet-url');
+            const csvFileInput = document.getElementById('csv-file-input');
+            const fileNameSpan = document.getElementById('file-name');
+            const clearLeadsBtn = document.getElementById('clear-leads-btn');
+            const modal = document.getElementById('confirmation-modal');
+            const modalMessage = document.getElementById('modal-message');
+            const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+            const modalCancelBtn = document.getElementById('modal-cancel-btn');
+            const toast = document.getElementById('toast-notification');
+            const toastMessage = document.getElementById('toast-message');
+            let allLeads = [];
+            let tableHeaders = [];
+            let selectedFile = null;
+            let leadsUnsubscribe = null;
+            let currentSort = { column: 'score', direction: 'desc' };
+            let onConfirmCallback = null;
+            onAuthStateChanged(auth, user => {
+                if (user) {
+                    userEmailSpan.textContent = user.email;
+                    setupRealtimeLeadListener(user.uid);
+                } else {
+                    window.location.href = 'login.html';
+                }
+            });
+            logoutBtn.addEventListener('click', () => signOut(auth));
+            searchInput.addEventListener('input', applyFiltersAndRender);
+            industryFilter.addEventListener('change', applyFiltersAndRender);
+            csvFileInput.addEventListener('change', (event) => {
+                selectedFile = event.target.files[0];
+                if (selectedFile) {
+                    fileNameSpan.textContent = selectedFile.name;
+                    sheetUrlInput.value = '';
+                }
+            });
+            sheetUrlInput.addEventListener('input', () => {
+                if (sheetUrlInput.value) {
+                    selectedFile = null;
+                    csvFileInput.value = '';
+                    fileNameSpan.textContent = 'No file chosen';
+                }
+            });
+            modalConfirmBtn.addEventListener('click', () => {
+                if (onConfirmCallback) onConfirmCallback();
+                hideModal();
+            });
+            modalCancelBtn.addEventListener('click', hideModal);
+            function showToast(message) {
+                toastMessage.textContent = message;
+                toast.classList.remove('opacity-0', 'translate-y-2');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0', 'translate-y-2');
+                }, 3000);
+            }
+            function showModal(message, onConfirm) {
+                modalMessage.textContent = message;
+                onConfirmCallback = onConfirm;
+                modal.classList.remove('hidden');
+            }
+            function hideModal() {
+                modal.classList.add('hidden');
+                onConfirmCallback = null;
+            }
+            loadLeadsBtn.addEventListener('click', async () => {
+                const user = auth.currentUser;
+                if (!user) return;
+                showToast('Uploading leads...');
+                try {
+                    const idToken = await user.getIdToken(true);
+                    const headers = { 'Authorization': `Bearer ${idToken}` };
+                    let response;
+                    if (selectedFile) {
+                        const formData = new FormData();
+                        formData.append('sheet', selectedFile);
+                        response = await fetch(`${API_URL}/api/load-sheet`, { method: 'POST', headers, body: formData });
+                    } else if (sheetUrlInput.value) {
+                        headers['Content-Type'] = 'application/json';
+                        response = await fetch(`${API_URL}/api/load-sheet`, {
+                            method: 'POST', headers, body: JSON.stringify({ url: sheetUrlInput.value }),
+                        });
+                    } else {
+                        throw new Error('Please provide a URL or select a file.');
+                    }
+                    const result = await response.json();
+                    if (!response.ok) throw new Error(result.error || 'Failed to load.');
+                    showToast(`✅ ${result.message}`);
+                } catch (error) {
+                    showToast(`❌ Error: ${error.message}`);
+                }
+            });
+            clearLeadsBtn.addEventListener('click', () => {
+                showModal("Are you sure you want to delete ALL your leads? This cannot be undone.", async () => {
+                    const user = auth.currentUser;
+                    if (!user) return;
+                    try {
+                        const idToken = await user.getIdToken(true);
+                        const response = await fetch(`${API_URL}/api/clear-leads`, {
+                            method: 'POST',
+                            headers: { 'Authorization': `Bearer ${idToken}` }
+                        });
+                        if (!response.ok) throw new Error('Failed to clear leads.');
+                        showToast("All leads have been deleted successfully.");
+                    } catch (error) {
+                        showToast(`Error: ${error.message}`);
+                    }
+                });
+            });
+            function setupRealtimeLeadListener(userId) {
+                if (leadsUnsubscribe) leadsUnsubscribe();
+                const leadsRef = collection(db, "users", userId, "leads");
+                leadsUnsubscribe = onSnapshot(query(leadsRef), (snapshot) => {
+                    allLeads = [];
+                    let headers = new Set();
+                    snapshot.forEach((doc) => {
+                        const data = doc.data();
+                        allLeads.push({ id: doc.id, ...data });
+                        Object.keys(data).forEach(key => headers.add(key));
+                    });
+                    const preferredOrder = ['score', 'client name', 'email', 'company / website', 'industry'];
+                    tableHeaders = [...preferredOrder.filter(h => headers.has(h)), ...[...headers].filter(h => !preferredOrder.includes(h))];
+                    if (!tableHeaders.includes('score')) tableHeaders.unshift('score');
+                    populateIndustryFilter(allLeads);
+                    applyFiltersAndRender();
+                });
+            }
+            function populateIndustryFilter(leads) {
+                const currentVal = industryFilter.value;
+                const industries = [...new Set(leads.map(lead => lead.industry).filter(Boolean))];
+                industryFilter.innerHTML = '<option value="">All Industries</option>';
+                industries.sort().forEach(industry => {
+                    const option = document.createElement('option');
+                    option.value = industry;
+                    option.textContent = industry;
+                    industryFilter.appendChild(option);
+                });
+                industryFilter.value = currentVal;
+            }
+            function applyFiltersAndRender() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const selectedIndustry = industryFilter.value;
+                let filteredLeads = allLeads.filter(lead => {
+                    const matchesIndustry = selectedIndustry === '' || lead.industry === selectedIndustry;
+                    const matchesSearch = searchTerm === '' || Object.values(lead).some(val => 
+                        String(val).toLowerCase().includes(searchTerm)
+                    );
+                    return matchesSearch && matchesIndustry;
+                });
+                filteredLeads.sort((a, b) => {
+                    const valA = a[currentSort.column] === undefined ? -1 : a[currentSort.column];
+                    const valB = b[currentSort.column] === undefined ? -1 : b[currentSort.column];
+                    if (currentSort.direction === 'asc') {
+                        return valA > valB ? 1 : -1;
+                    } else {
+                        return valA < valB ? 1 : -1;
+                    }
+                });
+                renderLeads(filteredLeads);
+            }
+            async function updateScore(leadId, currentScore, change) {
+                const user = auth.currentUser;
+                if (!user) return;
+                const newScore = (currentScore || 0) + change;
+                try {
+                    const idToken = await user.getIdToken(true);
+                    await fetch(`${API_URL}/api/leads/${leadId}/score`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${idToken}`
+                        },
+                        body: JSON.stringify({ score: newScore })
+                    });
+                } catch (error) {
+                    console.error("Failed to update score:", error);
+                }
+            }
+            function renderLeads(leads) {
+                leadsTableHead.innerHTML = `<tr>${tableHeaders.map(h => `<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase sortable-header" data-sort="${h}">${h}</th>`).join('')}</tr>`;
+                document.querySelectorAll('.sortable-header').forEach(header => {
+                    header.addEventListener('click', (e) => {
+                        const column = e.target.dataset.sort;
+                        if (currentSort.column === column) {
+                            currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+                        } else {
+                            currentSort.column = column;
+                            currentSort.direction = 'desc';
+                        }
+                        applyFiltersAndRender();
+                    });
+                });
+                if (!leads || leads.length === 0) {
+                    leadsTableBody.innerHTML = `<tr><td colspan="${tableHeaders.length || 1}" class="text-center py-10 text-gray-500">No leads found.</td></tr>`;
+                    return;
+                }
+                leadsTableBody.innerHTML = leads.map(lead => {
+                    const score = lead.score === undefined ? 0 : lead.score;
+                    const scoreCell = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <div class="flex items-center gap-2">
+                                <button class="score-btn p-1 rounded-full" data-lead-id="${lead.id}" data-score="${score}" data-change="-1">
+                                    <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clip-rule="evenodd" /></svg>
+                                </button>
+                                <span class="font-bold w-4 text-center">${score}</span>
+                                <button class="score-btn p-1 rounded-full" data-lead-id="${lead.id}" data-score="${score}" data-change="1">
+                                    <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" /></svg>
+                                </button>
+                            </div>
+                        </td>`;
+                    const otherCells = tableHeaders.filter(h => h !== 'score').map(header => `<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${lead[header] || ''}</td>`).join('');
+                    return `<tr>${scoreCell}${otherCells}</tr>`;
+                }).join('');
+                document.querySelectorAll('.score-btn').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const target = e.currentTarget;
+                        updateScore(target.dataset.leadId, parseInt(target.dataset.score, 10), parseInt(target.dataset.change, 10));
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</ht
