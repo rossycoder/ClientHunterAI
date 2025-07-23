@@ -32,7 +32,8 @@ CORS(app, resources={
             "http://127.0.0.1:5500", 
             "http://localhost:5500", 
             "null",
-            CHROME_EXTENSION_ORIGIN  # Extension ko ijazat dein
+            "https://client-hunter-a.vercel.app",  # Isko quotes mein daalna hai
+            CHROME_EXTENSION_ORIGIN 
         ]
     }
 })
@@ -50,7 +51,7 @@ except Exception as e:
     db = None
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
-YOUR_DOMAIN = 'http://127.0.0.1:5500'
+YOUR_DOMAIN = 'https://client-hunter-a.vercel.app/'
 
 # --- Helper Functions ---
 def get_user_from_token(request):
