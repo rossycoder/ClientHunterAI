@@ -32,7 +32,7 @@ CORS(app, resources={
             "http://127.0.0.1:5500",
             "http://localhost:5500",
             "null",
-            "https://client-hunter-lx4881n9z-rossycoders-projects.vercel.app",
+            "https://client-hunter-mvz6gyei3-rossycoders-projects.vercel.app",
             CHROME_EXTENSION_ORIGIN
         ]
     }
