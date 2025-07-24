@@ -29,15 +29,15 @@ CHROME_EXTENSION_ORIGIN = "chrome-extension://aealgniiohdlafbfgenillkbcahodfcj"
 CORS(app, resources={
     r"/api/*": {
         "origins": [
-            "http://127.0.0.1:5500", 
-            "http://localhost:5500", 
+            "http://127.0.0.1:5500",
+            "http://localhost:5500",
             "null",
-            "https://client-hunter-a.vercel.app",  # Isko quotes mein daalna hai
-            CHROME_EXTENSION_ORIGIN 
+            "https://client-hunter-lx4881n9z-rossycoders-projects.vercel.app",
+            CHROME_EXTENSION_ORIGIN
         ]
     }
 })
-
+# YEH DOOSRI LINE GHALAT HAI AUR MASLA KAR RAHI HAI
 CORS(app, resources={r"/api/*": {"origins": ["http://127.0.0.1:5500", "http://localhost:5500", "null"]}})
 
 # --- Firebase & Stripe Configuration ---
