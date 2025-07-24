@@ -140,7 +140,7 @@ onAuthStateChanged(auth, user => {
     } else {
         // Token clear karein jab user logout ho
         chrome.storage.local.remove('idToken');
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     }
 });
 
