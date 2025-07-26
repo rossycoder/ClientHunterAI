@@ -26,7 +26,6 @@
             transform: translateX(-50%);
             z-index: 100; transition: opacity 0.3s, transform 0.3s;
         }
-        /* NEW: Mobile Sidebar Styles */
         .mobile-sidebar {
             transition: transform 0.3s ease-in-out;
         }
@@ -48,7 +47,7 @@
                     <a href="analytics.html" class="sidebar-link flex items-center p-3 rounded-lg"><svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>Analytics</a>
                 </nav>
                 <div class="mt-auto">
-                     <a href="settings.html" class="sidebar-link flex items-center p-3 rounded-lg"> <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Settings</a>
+                    <a href="settings.html" class="sidebar-link flex items-center p-3 rounded-lg"> <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Settings</a>
                 </div>
             </div>
         </div>
@@ -56,15 +55,14 @@
         <!-- Main content -->
         <div class="flex flex-col flex-grow">
             <header class="flex justify-between items-center p-4 md:p-6 border-b bg-white">
-                 <!-- Hamburger Menu Button -->
-                 <button id="menu-btn" class="md:hidden">
+                <button id="menu-btn" class="md:hidden">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                 </button>
-                 <h2 class="text-xl md:text-2xl font-semibold text-gray-700">Manage Leads</h2>
-                 <div class="flex items-center gap-4">
-                     <span id="user-email" class="text-sm text-gray-600 hidden sm:block"></span>
-                     <button id="logout-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg">Logout</button>
-                 </div>
+                </button>
+                <h2 class="text-xl md:text-2xl font-semibold text-gray-700">Manage Leads</h2>
+                <div class="flex items-center gap-4">
+                    <span id="user-email" class="text-sm text-gray-600 hidden sm:block"></span>
+                    <button id="logout-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg">Logout</button>
+                </div>
             </header>
             
             <main class="flex-grow p-4 md:p-6 overflow-y-auto">
@@ -147,18 +145,7 @@
         import { getFirestore, collection, onSnapshot, query } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 
         document.addEventListener('DOMContentLoaded', function() {
-            // ... (Your existing JavaScript code remains exactly the same)
-            // The only new part is the mobile menu toggle logic below
-            
-            const sidebar = document.getElementById('sidebar');
-            const menuBtn = document.getElementById('menu-btn');
-
-            menuBtn.addEventListener('click', () => {
-                sidebar.classList.toggle('-translate-x-full');
-            });
-
-            // Your existing code from line 220 onwards goes here...
-      const API_URL = 'https://rozeena.pythonanywhere.com';
+            const API_URL = 'https://rozeena.pythonanywhere.com';
             const firebaseConfig = {
                 apiKey: "AIzaSyCerSZpilFHxS3cB4BUqTricn2xLeAm3gc",
                 authDomain: "client-hunter-app.firebaseapp.com",
@@ -187,23 +174,32 @@
             const modalCancelBtn = document.getElementById('modal-cancel-btn');
             const toast = document.getElementById('toast-notification');
             const toastMessage = document.getElementById('toast-message');
+            const sidebar = document.getElementById('sidebar');
+            const menuBtn = document.getElementById('menu-btn');
+            
             let allLeads = [];
             let tableHeaders = [];
             let selectedFile = null;
             let leadsUnsubscribe = null;
             let currentSort = { column: 'score', direction: 'desc' };
             let onConfirmCallback = null;
+
             onAuthStateChanged(auth, user => {
                 if (user) {
                     userEmailSpan.textContent = user.email;
                     setupRealtimeLeadListener(user.uid);
                 } else {
-                    window.location.href = 'login.html';
+                    // YAHAN GHALATI THEEK KAR DI GAYI HAI
+                    window.location.href = 'index.html';
                 }
             });
+
             logoutBtn.addEventListener('click', () => signOut(auth));
+            menuBtn.addEventListener('click', () => sidebar.classList.toggle('-translate-x-full'));
+            
             searchInput.addEventListener('input', applyFiltersAndRender);
             industryFilter.addEventListener('change', applyFiltersAndRender);
+            
             csvFileInput.addEventListener('change', (event) => {
                 selectedFile = event.target.files[0];
                 if (selectedFile) {
@@ -211,6 +207,7 @@
                     sheetUrlInput.value = '';
                 }
             });
+            
             sheetUrlInput.addEventListener('input', () => {
                 if (sheetUrlInput.value) {
                     selectedFile = null;
@@ -218,11 +215,13 @@
                     fileNameSpan.textContent = 'No file chosen';
                 }
             });
+
             modalConfirmBtn.addEventListener('click', () => {
                 if (onConfirmCallback) onConfirmCallback();
                 hideModal();
             });
             modalCancelBtn.addEventListener('click', hideModal);
+
             function showToast(message) {
                 toastMessage.textContent = message;
                 toast.classList.remove('opacity-0', 'translate-y-2');
@@ -230,15 +229,18 @@
                     toast.classList.add('opacity-0', 'translate-y-2');
                 }, 3000);
             }
+
             function showModal(message, onConfirm) {
                 modalMessage.textContent = message;
                 onConfirmCallback = onConfirm;
                 modal.classList.remove('hidden');
             }
+
             function hideModal() {
                 modal.classList.add('hidden');
                 onConfirmCallback = null;
             }
+
             loadLeadsBtn.addEventListener('click', async () => {
                 const user = auth.currentUser;
                 if (!user) return;
@@ -266,6 +268,7 @@
                     showToast(`❌ Error: ${error.message}`);
                 }
             });
+
             clearLeadsBtn.addEventListener('click', () => {
                 showModal("Are you sure you want to delete ALL your leads? This cannot be undone.", async () => {
                     const user = auth.currentUser;
@@ -283,6 +286,7 @@
                     }
                 });
             });
+
             function setupRealtimeLeadListener(userId) {
                 if (leadsUnsubscribe) leadsUnsubscribe();
                 const leadsRef = collection(db, "users", userId, "leads");
@@ -301,6 +305,7 @@
                     applyFiltersAndRender();
                 });
             }
+
             function populateIndustryFilter(leads) {
                 const currentVal = industryFilter.value;
                 const industries = [...new Set(leads.map(lead => lead.industry).filter(Boolean))];
@@ -313,6 +318,7 @@
                 });
                 industryFilter.value = currentVal;
             }
+
             function applyFiltersAndRender() {
                 const searchTerm = searchInput.value.toLowerCase();
                 const selectedIndustry = industryFilter.value;
@@ -334,6 +340,7 @@
                 });
                 renderLeads(filteredLeads);
             }
+
             async function updateScore(leadId, currentScore, change) {
                 const user = auth.currentUser;
                 if (!user) return;
@@ -352,6 +359,7 @@
                     console.error("Failed to update score:", error);
                 }
             }
+
             function renderLeads(leads) {
                 leadsTableHead.innerHTML = `<tr>${tableHeaders.map(h => `<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase sortable-header" data-sort="${h}">${h}</th>`).join('')}</tr>`;
                 document.querySelectorAll('.sortable-header').forEach(header => {
@@ -397,4 +405,4 @@
         });
     </script>
 </body>
-</ht
+</html>
